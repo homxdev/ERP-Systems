@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   TextField,
   Button,
-  Fab,
   Box,
   Typography,
   Divider,
@@ -14,17 +13,10 @@ import {
 import { CustomCard } from "components/GlobalComponents";
 
 // redux action
-import {
-  signinUserWithFirebase,
-  signinUserWithGoogle,
-  signinUserWithFacebook,
-  signinUserWithTwitter,
-  signinUserWithGithub,
-  signinUserWithJwt,
-} from "actions";
+import { signinUserWithFirebase,  } from "actions";
 
-import Auth from "../../Auth/Auth";
-const auth = new Auth();
+// import Auth from "../../Auth/Auth";
+// const auth = new Auth();
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -104,15 +96,19 @@ function SigninFirebase(props) {
     props.history.push("/forgot-password");
   };
 
-  const loginAuth0 = () => {
+  /** 
+   * 
+   * const loginAuth0 = () => {
     auth.login();
   };
 
-  const onJwtLogin = (e) => {
+   *  const onJwtLogin = (e) => {
     if (email && password) {
       dispatch(signinUserWithJwt({ email, password }, props.history));
     }
   };
+ 
+   */
   const handleChange = (event, value) => {
     setValue(value);
   };

@@ -11,7 +11,7 @@ import {
   Tab,
 } from "@material-ui/core";
 import { CustomCard } from "components/GlobalComponents";
-import { signupUserWithFirebase, signupUserWithJwt } from "actions";
+import { signupUserWithFirebase  } from "actions";
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -83,12 +83,15 @@ function SignupFirebase(props) {
   const onUserSignIn = () => {
     props.history.push("/signin");
   };
-
+  /**
+ * 
   const onJwtSignUp = () => {
     if (email !== "" && password !== "") {
       dispatch(signupUserWithJwt({ email, password }, props.history));
     }
   };
+ *  
+ */
 
   const handleChange = (event, value) => {
     setValue(value);
