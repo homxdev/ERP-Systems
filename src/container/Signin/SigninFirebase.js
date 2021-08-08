@@ -13,7 +13,7 @@ import {
 import { CustomCard } from "components/GlobalComponents";
 
 // redux action
-import { signinUserWithFirebase,  } from "actions";
+import { signinUserWithFirebase } from "actions";
 
 // import Auth from "../../Auth/Auth";
 // const auth = new Auth();
@@ -126,23 +126,7 @@ function SigninFirebase(props) {
           alignItems="center"
         >
           <Box width="100%">
-            <Box textAlign="center" className="session-logo">
-              {isDarkModeActive ? (
-                <img
-                  className="img-fluid"
-                  alt="img"
-                  width="100"
-                  src={require(`assets/Images/hulk-light.png`).default}
-                />
-              ) : (
-                <img
-                  className="img-fluid"
-                  alt="img"
-                  width="100"
-                  src={require(`assets/Images/hulk-dark.png`).default}
-                />
-              )}
-            </Box>
+            <Box textAlign="center" className="session-logo"></Box>
             <div className="log-tab">
               <AppBar position="static">
                 <Tabs
@@ -150,7 +134,7 @@ function SigninFirebase(props) {
                   onChange={handleChange}
                   aria-label="simple tabs example"
                 >
-                  <Tab label="Firebase" {...a11yProps(0)} />
+                  <Tab label="Log In" {...a11yProps(0)} />
                 </Tabs>
               </AppBar>
             </div>
@@ -165,7 +149,7 @@ function SigninFirebase(props) {
                     color="textPrimary"
                     className="fw-500"
                   >
-                    Hulk
+                    ERP
                   </Typography>
                   <Box my={3}>
                     <TextField

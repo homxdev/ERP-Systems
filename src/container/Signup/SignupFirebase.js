@@ -11,7 +11,11 @@ import {
   Tab,
 } from "@material-ui/core";
 import { CustomCard } from "components/GlobalComponents";
-import { signupUserWithFirebase  } from "actions";
+import { signupUserWithFirebase } from "actions";
+
+// Notifications Handler
+import { NotificationManager } from "react-notifications";
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -45,9 +49,8 @@ function SignupFirebase(props) {
   const [value, setValue] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
-  const settings = useSelector((state) => state.settings);
+
   /**
    * Signup user using firebase
    */
@@ -55,15 +58,23 @@ function SignupFirebase(props) {
     let fieldValidationErrors = formErrors;
     if (email === "") {
       fieldValidationErrors.blankEmail = true;
+      NotificationManager.warning("Please Enter Email Address");
     }
     if (password === "") {
       fieldValidationErrors.blankPassword = true;
+      NotificationManager.warning("Please Enter Password");
+    
     }
     if (!validateEmail(email)) {
       fieldValidationErrors.validEmail = true;
     }
-    await setFormErrors(fieldValidationErrors);
-    if (email !== "" && password !== "") {
+
+    if (!checked) {
+      NotificationManager.error("Please Accept Terms of Use");
+    }
+
+    setFormErrors(fieldValidationErrors);
+    if (email !== "" && password !== "" && checked) {
       var userDetails = { email, password };
       dispatch(signupUserWithFirebase(userDetails, props.history));
     }
@@ -97,27 +108,11 @@ function SignupFirebase(props) {
     setValue(value);
   };
   const { blankEmail, blankPassword, validEmail } = formErrors;
-  const { isDarkModeActive } = settings;
+  const [checked, termsChecked] = useState(false);
   return (
     <div className="session-wrapper session-wrapper-v2">
       <Box mx="auto" className="sign-box-wrap">
-        <Box textAlign="center" className="session-logo">
-          {isDarkModeActive ? (
-            <img
-              className="img-fluid"
-              alt="img"
-              width="100"
-              src={require(`assets/Images/hulk-light.png`).default}
-            />
-          ) : (
-            <img
-              className="img-fluid"
-              alt="img"
-              width="100"
-              src={require(`assets/Images/hulk-dark.png`).default}
-            />
-          )}
-        </Box>
+        <Box textAlign="center" className="session-logo"></Box>
         <Box
           className="sign-box"
           display="flex"
@@ -131,7 +126,7 @@ function SignupFirebase(props) {
                 onChange={handleChange}
                 aria-label="simple tabs example"
               >
-                <Tab label="Firebase" {...a11yProps(0)} />
+                <Tab label="Sign Up" {...a11yProps(0)} />
                 {/** 
 				  *    <Tab label="JWT" {...a11yProps(1)} />
              
@@ -150,20 +145,9 @@ function SignupFirebase(props) {
                       color="textPrimary"
                       className="fw-500"
                     >
-                      Hulk
+                      ERP
                     </Typography>
-                    <Box my={3}>
-                      <TextField
-                        required
-                        fullWidth
-                        variant="outlined"
-                        className="outlined-input"
-                        id="fname"
-                        type="text"
-                        name="email"
-                        placeholder="John Doe"
-                      />
-                    </Box>
+                    <br />
                     <Box mb={3}>
                       <TextField
                         required
@@ -224,8 +208,9 @@ function SignupFirebase(props) {
                     >
                       <Checkbox
                         color="primary"
-                        value="uncontrolled"
+                        checked={checked}
                         inputProps={{ "aria-label": "uncontrolled-checkbox" }}
+                        onChange={() => termsChecked(!checked)}
                       />
                       <Box component="span" fontSize="subtitle2.fontSize">
                         I agree all&nbsp;
@@ -277,7 +262,7 @@ function SignupFirebase(props) {
                       color="textPrimary"
                       className="fw-500"
                     >
-                      Hulk
+                      ERP
                     </Typography>
                     <Box my={3}>
                       <TextField
